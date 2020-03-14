@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/jvictor/Documentos/sisenex/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w480dp-port-v13/values-w480dp-port-v13.xml",
+            "outputFile": "/home/jvictor/Documentos/Sisenex-Mobile/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w480dp-port-v13/values-w480dp-port-v13.xml",
             "map": [
                 {
                     "source": "/home/jvictor/.gradle/caches/transforms-2/files-2.1/2027ff62ec8046462c8966af58083f5a/res/values-w480dp-port-v13/values-w480dp-port-v13.xml",
