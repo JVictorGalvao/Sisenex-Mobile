@@ -11,7 +11,16 @@ import {
 } from 'react-native';
 import {Searchbar} from 'react-native-paper';
 import {Avatar} from 'react-native-elements';
-import index from './pages/Home/index'
+import { useNavigation } from '@react-navigation/native';
+import Profile from '../Profile/index'
+
+function GoToButton({ Profile }) {
+  const navigation = useNavigation();
+
+  return (
+    <Profile />
+  );
+}
 
 export default class Api extends React.Component {
   constructor(props) {
@@ -21,6 +30,12 @@ export default class Api extends React.Component {
       isLoading: true,
       firstQuery: '',
     };
+  }
+
+  GoToButton = ({ navigation, Profile }) => {
+    return (
+      navigation.navigate(Profile)
+    );
   }
 
   fetchData = () => {
@@ -54,7 +69,7 @@ export default class Api extends React.Component {
           data={this.state.dataSource}
           renderItem={({item}) => (
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Profile')} //trocar de pagina
+              onPress={() => GoToButton} //trocar de pagina
               style={{
                 flexDirection: 'row',
                 padding: 10,

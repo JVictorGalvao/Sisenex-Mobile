@@ -1,27 +1,34 @@
-import * as React from 'react';
-import {
-  View,
-  Text,
-  Button,
-  FlatList,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import React from 'react';
+import { Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
 import {Searchbar} from 'react-native-paper';
 import {Avatar} from 'react-native-elements';
-import index from './pages/Home/index'
+//import Profile from '../Profile';
+//import Api from './inputbox';
 
-export default class Api extends React.Component {
+
+// import { Container } from './styles';
+
+export default function Home({navigation}) {
+
+  function navigateToProfile(){
+    navigation.navigate('Profile')
+  }
+  return (
+      <Api />   
+  );
+}
+
+class Api extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       user: '',
       isLoading: true,
       firstQuery: '',
-    };
+    };    
   }
+
 
   fetchData = () => {
     const user = this.state.user;
@@ -54,7 +61,7 @@ export default class Api extends React.Component {
           data={this.state.dataSource}
           renderItem={({item}) => (
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Profile')} //trocar de pagina
+              onPress={this.navigateToProfile} //trocar de pagina
               style={{
                 flexDirection: 'row',
                 padding: 10,
@@ -84,6 +91,7 @@ export default class Api extends React.Component {
           )}
           keyExtractor={({id}) => id.toString()}
         />
+        <Button title='pega merda' onPress={this.props.navigateToProfile}/>
       </View>
     );
   }
