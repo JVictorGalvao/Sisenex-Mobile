@@ -2,19 +2,92 @@ import React from 'react';
 import { Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
 import {Searchbar} from 'react-native-paper';
 import {Avatar} from 'react-native-elements';
-//import Profile from '../Profile';
-//import Api from './inputbox';
+
+export default class Home extends React.PureComponent {
+  static navigationOptions = {
+      title: 'Home'
+  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      //data: [],
+      user: '',
+    }
+  }
+
+  fetchData = () => {
+    const user = this.state.user;
+    return fetch(`https://api.github.com/search/users?q=${user}`)
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          isLoading: false,
+          data: responseJson.items,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  _renderItem = ({item}) => {
+      return  (
+          <TouchableOpacity onPress={()=>this._onItemPress(item)} style={{flexDirection:'row', padding: 10, alignItems:'center'}}>
+              <Avatar
+                size="medium"
+                rounded
+                source={{
+                  uri: `${item.avatar_url}`,
+                }}
+              />
+              <Text style={{marginLeft: 10,fontWeight: 'bold'}}>{item.login}</Text>
+              <Text style={{marginLeft: 10}}>{item.type}</Text>
+          </TouchableOpacity>
+      )
+  }
+
+  _onItemPress = (item) => {
+      this.props.navigation.navigate('Profile', {User: item})
+  } 
+
+  render() {
+      return (
+        <View>
+          <Searchbar
+            placeholder="Enter Github username"
+            autoCapitalize="none"
+            autoCorrect={false}
+            value={this.props.user}
+            onChangeText={user => this.setState({user})}
+            onIconPress={this.fetchData}
+          />
+          <FlatList 
+              data={this.state.data}
+              renderItem={this._renderItem}
+              keyExtractor={({id}) => id.toString()}
+              ItemSeparatorComponent={()=>
+                  <View style={{height:1, backgroundColor: '#f7f7f7'}} 
+              />}
+          />
+      </View>
+      )
+  }
+}
 
 
-// import { Container } from './styles';
-
-export default function Home({navigation}) {
+/*export default function Home({navigation}) {
 
   function navigateToProfile(){
     navigation.navigate('Profile')
   }
+  
   return (
-      <Api />   
+      
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
+        <Api />
+        <Button title="esse" onPress={navigateToProfile}/>
+        
+      </View>   
   );
 }
 
@@ -25,10 +98,8 @@ class Api extends React.Component {
     this.state = {
       user: '',
       isLoading: true,
-      firstQuery: '',
-    };    
+    };
   }
-
 
   fetchData = () => {
     const user = this.state.user;
@@ -61,7 +132,7 @@ class Api extends React.Component {
           data={this.state.dataSource}
           renderItem={({item}) => (
             <TouchableOpacity
-              onPress={this.navigateToProfile} //trocar de pagina
+              onPress={() => navigateToProfile()} //trocar de pagina
               style={{
                 flexDirection: 'row',
                 padding: 10,
@@ -91,8 +162,7 @@ class Api extends React.Component {
           )}
           keyExtractor={({id}) => id.toString()}
         />
-        <Button title='pega merda' onPress={this.props.navigateToProfile}/>
-      </View>
+        </View>
     );
   }
-}
+}*/

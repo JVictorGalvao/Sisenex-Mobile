@@ -9,7 +9,7 @@ export default function Routes() {
     return (
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} options={{title: 'Página Inicial'}} />
-        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Profile" component={Profile} options={{title: 'Detalhes'}}/>
       </Stack.Navigator>
     );
   }
