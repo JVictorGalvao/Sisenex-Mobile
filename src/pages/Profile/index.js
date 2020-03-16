@@ -5,18 +5,34 @@ import {Avatar} from 'react-native-elements';
 export default class Profile extends React.PureComponent {
   
   static navigationOptions = {
-    title: 'Profile'
+    title: 'Exemplo'
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      //data: [],
-      user: '',
+      data: '',
     }
   }
+
+  getData(user){
+    return fetch(`https://api.github.com/users/${user}`)
+   .then((response) => response.json())
+   .then((data) => {
+    this.setState({data});
+   })
+   .catch((error) => {
+     console.error(error);
+   });
+
+ }
+ componentDidMount() {
+  this.getData();
+}
+  
   render(){
     const { User } = this.props.route.params;
+    this.getData(User.login);
   return (
     <View style = {{flex: 1, alignItems: 'center'}}>
       <View style = {{padding: 25}}>
@@ -24,11 +40,14 @@ export default class Profile extends React.PureComponent {
           size="xlarge"
           rounded
           source={{
-          uri: `${User.avatar_url}`,
+          uri: `${this.state.data.avatar_url}`,
           }}
         />  
       </View>
-      <Text>{User.url}</Text>
+      <Text>{this.state.data.name}</Text>
+      <Text>{this.state.data.bio}</Text>
+      <Text>Seguidores {this.state.data.followers}</Text>
+      <Text>Seguindo {this.state.data.following}</Text>
     </View>
   );
 }

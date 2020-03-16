@@ -3,16 +3,6 @@ import { Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
 import {Searchbar} from 'react-native-paper';
 import {Avatar} from 'react-native-elements';
 
-function getMoviesFromApiAsync() {
-  return fetch(`https://api.github.com/users/${item.url}`)
-    .then((response) => response.json())
-    .then((responseJson) => {
-      return responseJson.user;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
 export default class Home extends React.PureComponent {
   static navigationOptions = {
       title: 'Home'
@@ -20,7 +10,7 @@ export default class Home extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      //data: [],
+      usuario: [],
       user: '',
     }
   }
@@ -39,6 +29,7 @@ export default class Home extends React.PureComponent {
         console.log(error);
       });
   };
+
   _renderItem = ({item}) => {
       return  (
           <TouchableOpacity onPress={()=>this._onItemPress(item)} style={{flexDirection:'row', padding: 10, alignItems:'center'}}>
